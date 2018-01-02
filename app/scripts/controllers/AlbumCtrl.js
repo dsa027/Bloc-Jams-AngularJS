@@ -1,6 +1,6 @@
 (function() {
-     function AlbumCtrl() {
-       this.albumData = albumPicasso
+     function AlbumCtrl(Fixtures) {
+       this.albumData = Fixtures.getAlbum()
      }
 
      this.formatTime = function(time) {
@@ -9,5 +9,5 @@
 
      angular
          .module('blocJams')
-         .controller('AlbumCtrl', AlbumCtrl)
+         .controller('AlbumCtrl', ['Fixtures', AlbumCtrl)
  })()
