@@ -1,7 +1,15 @@
 (function() {
   function SongPlayer() {
+    /**
+     * @desc Just something to return from this service when invoked
+     * @type {Object}
+     */
     const SongPlayer = {}
 
+    /**
+     * @desc The song that's playing/paused in BuzzObject
+     * @type {Object}
+     */
     let currentSong = null
     /**
      * @desc Buzz object audio file
@@ -9,23 +17,45 @@
      */
     let currentBuzzObject = null
 
+    /**
+     * @function pauseSong
+     * @desc If the song is different than what's currently playing, set the
+     * new song via setSong(song) and the play the song via playSong(song).
+     * If the song is the same and is paused, play the song via playSong(song).
+     * @param {Object} song
+     */
     SongPlayer.play = function(song) {
       if (currentSong !== song) {
         setSong(song)
-        currentBuzzObject.play()
-        song.playing = true
+        playSong(song)
       }
       else {
         if (currentBuzzObject.isPaused()) {
-          currentBuzzObject.play()
-          song.playing = true
+          playSong(song)
         }
       }
     }
 
+    /**
+     * @function pauseSong
+     * @desc Pauses the current song and sets song.playing to false so that the correct
+     * html & css will show the play ionicon
+     * @param {Object} song
+     */
     SongPlayer.pause = function(song) {
       currentBuzzObject.pause()
       song.playing = false
+    }
+
+    /**
+     * @function playSong
+     * @desc Plays the current song and sets song.playing to true so that the correct
+     * html & css will show the pause ionicon
+     * @param {Object} song
+     */
+    SongPlayer.playSong(song) {
+      currentBuzzObject.play()
+      song.playing = true
     }
 
     /**
