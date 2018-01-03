@@ -1,5 +1,5 @@
 (function() {
-  function SongPlayer() {
+  function SongPlayer(Fixtures) {
     /**
      * @desc Just something to return from this service when invoked
      * @type {Object}
@@ -7,10 +7,17 @@
     const SongPlayer = {}
 
     /**
+     * @desc This holds the current Album
+     * @type {Object}
+     */
+    let currentAlbum = Fixtures.getAlbum()
+
+    /**
      * @desc The song that's playing/paused in BuzzObject
      * @type {Object}
      */
-    let currentSong = null
+    SongPlayer.currentSong = null
+
     /**
      * @desc Buzz object audio file
      * @type {Object}
@@ -25,11 +32,12 @@
      * @param {Object} song
      */
     SongPlayer.play = function(song) {
-      if (currentSong !== song) {
+      song = song || SongPlayer.currentSong
+      if (SongPlayer.currentSong !== song) {
         this.setSong(song)
         this.playSong(song)
       }
-      else {
+      else if (SongPlayer.currentSong === song && SongPlayer.currentSong) {
         if (currentBuzzObject.isPaused()) {
           this.playSong(song)
         }
@@ -43,6 +51,7 @@
      * @param {Object} song
      */
     SongPlayer.pause = function(song) {
+      song = song || SongPlayer.currentSong
       currentBuzzObject.pause()
       song.playing = false
     }
@@ -59,20 +68,54 @@
     }
 
     /**
+     * @function getSongIndex
+     * @desc Gets the index of the song object passed in within the
+     * Fixture album
+     * @param {Object} song
+     */
+    const getSongIndex = function(song) {
+      return currentAlbum.songs.indexOf(song)
+    }
+
+    /**
+     * @function prev
+     * @desc Determine the previous song using this song's index. If we're
+     * past the beginning of the songs (index < 0) stop the song and
+     * set as not playing. Otherwise, set the song to the index and play it.
+     */
+    SongPlayer.previous = function() {
+      if (!SongPlayer.currentSong) return
+
+      let currentSongIndex = getSongIndex(SongPlayer.currentSong)
+      currentSongIndex--
+
+      if (currentSongIndex < 0) {
+        currentBuzzObject.stop();
+        SongPlayer.currentSong.playing = null
+      }
+      else {
+        const song = currentAlbum.songs[currentSongIndex]
+        this.setSong(song)
+        this.playSong(song)
+      }
+    }
+
+    /**
      * @function setSong
      * @desc Stops currently playing song and loads new audio file as currentBuzzObject
      * @param {Object} song
+     * @return the empty SongPlayer object
      */
     SongPlayer.setSong = function(song) {
       if (currentBuzzObject) {
         currentBuzzObject.stop()
-        currentSong.playing = null
+        SongPlayer.currentSong.playing = null
       }
       currentBuzzObject = new buzz.sound(song.audioUrl, {
         formats: ['mp3'],
         preload: true
       })
-      currentSong = song
+      SongPlayer.currentSong = song
     }
 
     return SongPlayer
@@ -80,5 +123,5 @@
 
   angular
      .module('blocJams')
-     .factory('SongPlayer', SongPlayer)
+     .factory('SongPlayer', ['Fixtures', SongPlayer])
  })();
