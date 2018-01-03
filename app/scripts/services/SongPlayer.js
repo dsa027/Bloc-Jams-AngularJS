@@ -78,7 +78,17 @@
     }
 
     /**
-     * @function prev
+     * @function stopSong
+     * @desc Stop the currently playing song and set the song's
+     * playing property to null
+     */
+    const stopSong = function() {
+      currentBuzzObject.stop();
+      SongPlayer.currentSong.playing = null
+    }
+
+    /**
+     * @function previous
      * @desc Determine the previous song using this song's index. If we're
      * past the beginning of the songs (index < 0) stop the song and
      * set as not playing. Otherwise, set the song to the index and play it.
@@ -90,8 +100,29 @@
       currentSongIndex--
 
       if (currentSongIndex < 0) {
-        currentBuzzObject.stop();
-        SongPlayer.currentSong.playing = null
+        stopSong()
+      }
+      else {
+        const song = currentAlbum.songs[currentSongIndex]
+        this.setSong(song)
+        this.playSong(song)
+      }
+    }
+
+    /**
+     * @function next
+     * @desc Determine the next song using this song's index. If we're
+     * past the end of the songs (index > number of songs-1) stop the song and
+     * set as not playing. Otherwise, set the song to the index and play it.
+     */
+    SongPlayer.next = function() {
+      if (!SongPlayer.currentSong) return
+
+      let currentSongIndex = getSongIndex(SongPlayer.currentSong)
+      currentSongIndex++
+
+      if (currentSongIndex >= currentAlbum.songs.length) {
+        stopSong()
       }
       else {
         const song = currentAlbum.songs[currentSongIndex]
