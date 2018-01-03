@@ -26,12 +26,12 @@
      */
     SongPlayer.play = function(song) {
       if (currentSong !== song) {
-        setSong(song)
-        playSong(song)
+        this.setSong(song)
+        this.playSong(song)
       }
       else {
         if (currentBuzzObject.isPaused()) {
-          playSong(song)
+          this.playSong(song)
         }
       }
     }
@@ -53,7 +53,7 @@
      * html & css will show the pause ionicon
      * @param {Object} song
      */
-    SongPlayer.playSong(song) {
+    SongPlayer.playSong = function(song) {
       currentBuzzObject.play()
       song.playing = true
     }
@@ -63,7 +63,7 @@
      * @desc Stops currently playing song and loads new audio file as currentBuzzObject
      * @param {Object} song
      */
-    SongPlayer.setSong(song) {
+    SongPlayer.setSong = function(song) {
       if (currentBuzzObject) {
         currentBuzzObject.stop()
         currentSong.playing = null
