@@ -31,6 +31,12 @@
     SongPlayer.volume = 80;
 
     /**
+     * @desc Controls whether the sounds is muted or not
+     * @type {Boolean}
+     */
+    this.isMuted = true
+
+    /**
      * @desc Buzz object audio file
      * @type {Object}
      */
@@ -169,10 +175,19 @@
       }
     }
 
-    SongPlayer.formatTime = function(time) {
-      if (!time || isNaN(time)) return '-:--'
-      
-      return buzz.toTimer(time)
+    /**
+      @function muteSound
+      @desc Mutes/unmutes the song player's sound depending on this.isMuted
+     */
+    SongPlayer.muteSound = function() {
+      if (!currentBuzzObject) return
+
+      this.isMuted = !this.isMuted
+
+      if (this.isMuted) currentBuzzObject.mute()
+      else currentBuzzObject.unmute()
+
+      this.muteStyle = this.isMuted ? {'color' : 'red'} : {'color' : 'white'}
     }
 
     /**
@@ -184,6 +199,8 @@
     SongPlayer.setSong = function(song) {
       if (currentBuzzObject) {
         currentBuzzObject.stop()
+        currentBuzzObject.unbind('timeupdate')
+        currentBuzzObject.unbind('ended')
         SongPlayer.currentSong.playing = null
       }
 
@@ -192,10 +209,23 @@
         preload: true
       })
 
+      // current time event handler
       currentBuzzObject.bind('timeupdate', function() {
         $rootScope.$apply(function() {
           SongPlayer.currentTime = currentBuzzObject.getTime()
         })
+      })
+
+      // end of play event handler for continuous play with circular queue
+      currentBuzzObject.bind('ended', function() {
+        let idx = getSongIndex(SongPlayer.currentSong)
+        idx++
+        if (idx >= currentAlbum.songs.length) {
+          idx = 0
+        }
+        const song = currentAlbum.songs[idx]
+        SongPlayer.setSong(song)
+        SongPlayer.playSong(song)
       })
 
       SongPlayer.currentSong = song

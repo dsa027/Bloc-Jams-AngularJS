@@ -30,10 +30,10 @@
             >
         </seek-bar>
         <div class="current-time">
-          {{ playerBar.songPlayer.formatTime(playerBar.songPlayer.currentTime) }}
+          {{ playerBar.songPlayer.currentTime | secondsToMMSS }}
         </div>
         <div class="total-time">
-          {{ playerBar.songPlayer.formatTime(playerBar.songPlayer.currentSong.duration) }}
+          {{ playerBar.songPlayer.currentSong.duration | secondsToMMSS }}
         </div>
       </div>
     </div>
@@ -44,6 +44,12 @@
           max="100"
           on-change="playerBar.songPlayer.setVolume(value)">
       </seek-bar>
+      <span
+          class="icon mute ion-volume-mute"
+          ng-style="playerBar.songPlayer.muteStyle"
+          ng-click="playerBar.songPlayer.muteSound()"
+          >
+      </span>
     </div>
   </div>
 </section>
