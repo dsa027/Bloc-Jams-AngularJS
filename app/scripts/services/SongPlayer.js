@@ -1,5 +1,5 @@
 (function() {
-  function SongPlayer(Fixtures) {
+  function SongPlayer($rootScope, Fixtures) {
     /**
      * @desc Just something to return from this service when invoked
      * @type {Object}
@@ -17,6 +17,12 @@
      * @type {Object}
      */
     SongPlayer.currentSong = null
+
+    /**
+     * @desc Current playback time (in seconds) of currently playing song
+     * @type {Number}
+     */
+    SongPlayer.currentTime = null;
 
     /**
      * @desc Buzz object audio file
@@ -132,6 +138,21 @@
     }
 
     /**
+     * @function setCurrentTime
+     * @desc Set current time (in seconds) of currently playing song.
+     * Called from seekBar.js via the call `scope.onChange({value: newValue})`
+     * where onChange === player_bar on-change attribute:
+     * `on-change="playerBar.songPlayer.setCurrentTime(value)"`
+     * @param {Number} time
+     */
+    SongPlayer.setCurrentTime = function(time) {
+      console.log("SongPlayer.setCurrentTime with time: " + time);
+      if (currentBuzzObject) {
+        currentBuzzObject.setTime(time);
+      }
+    };
+
+    /**
      * @function setSong
      * @desc Stops currently playing song and loads new audio file as currentBuzzObject
      * @param {Object} song
@@ -142,10 +163,18 @@
         currentBuzzObject.stop()
         SongPlayer.currentSong.playing = null
       }
+
       currentBuzzObject = new buzz.sound(song.audioUrl, {
         formats: ['mp3'],
         preload: true
       })
+
+      currentBuzzObject.bind('timeupdate', function() {
+        $rootScope.$apply(function() {
+          SongPlayer.currentTime = currentBuzzObject.getTime()
+        })
+      })
+
       SongPlayer.currentSong = song
     }
 
@@ -154,5 +183,5 @@
 
   angular
      .module('blocJams')
-     .factory('SongPlayer', ['Fixtures', SongPlayer])
+     .factory('SongPlayer', ['$rootScope', 'Fixtures', SongPlayer])
  })();

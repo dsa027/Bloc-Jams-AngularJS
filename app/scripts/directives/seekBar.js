@@ -12,16 +12,26 @@
       templateUrl: '/templates/directives/seek_bar.html',
       replace: true,
       restrict: 'E',
-      scope: { },
+      scope: {
+        onChange: '&'
+      },
       link: function(scope, element, attributes) {
-        scope.value = 0;
-        scope.max = 100;
+        scope.value = 0
+        scope.max = 100
 
         var seekBar = $(element)
 
+        attributes.$observe('value', function(newValue) {
+          scope.value = newValue;
+        })
+
+        attributes.$observe('max', function(newValue) {
+          scope.max = newValue;
+        })
+
         var percentString = function () {
             return (scope.value / scope.max * 100) + "%"
-        };
+        }
 
         scope.fillStyle = function() {
           return {width: percentString()}
@@ -34,6 +44,7 @@
         scope.onClickSeekBar = function(event) {
           let percent = calculatePercent(seekBar, event)
           scope.value = percent * scope.max
+          notifyOnChange(scope.value)
         }
 
         scope.trackThumb = function() {
@@ -41,6 +52,8 @@
             const percent = calculatePercent(seekBar, event)
             scope.$apply(function() {
               scope.value = percent * scope.max
+              // indirect call to SongPlayer.setCurrentTime
+              notifyOnChange(scope.value)
             })
           })
 
@@ -48,6 +61,16 @@
             $document.unbind('mousemove.thumb')
             $document.unbind('mouseup.thumb')
           })
+        }
+
+        /*
+        * Calls on-change="playerBar.songPlayer.setCurrentTime(value)"
+        * from the player_bar.html <seek-bar> on-change attribute.
+        */
+        const notifyOnChange = function(newValue) {
+          if (typeof scope.onChange === 'function') {
+            scope.onChange({value: newValue});
+          }
         }
       }
     }
