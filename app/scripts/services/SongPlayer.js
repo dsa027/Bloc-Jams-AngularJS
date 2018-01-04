@@ -169,6 +169,12 @@
       }
     }
 
+    SongPlayer.formatTime = function(time) {
+      if (!time || isNaN(time)) return '-:--'
+      
+      return buzz.toTimer(time)
+    }
+
     /**
      * @function setSong
      * @desc Stops currently playing song and loads new audio file as currentBuzzObject

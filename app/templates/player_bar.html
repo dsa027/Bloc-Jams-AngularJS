@@ -30,10 +30,10 @@
             >
         </seek-bar>
         <div class="current-time">
-          {{ playerBar.songPlayer.currentTime || 0 | secondsToDate | date:'mm:ss' }}
+          {{ playerBar.songPlayer.formatTime(playerBar.songPlayer.currentTime) }}
         </div>
         <div class="total-time">
-          {{ playerBar.songPlayer.currentSong.duration || 0 | secondsToDate | date:'mm:ss'}}
+          {{ playerBar.songPlayer.formatTime(playerBar.songPlayer.currentSong.duration) }}
         </div>
       </div>
     </div>
