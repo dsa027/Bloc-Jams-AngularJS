@@ -25,6 +25,12 @@
     SongPlayer.currentTime = null;
 
     /**
+     * @desc Volume of song player
+     * @type {Number}
+     */
+    SongPlayer.volume = 80;
+
+    /**
      * @desc Buzz object audio file
      * @type {Object}
      */
@@ -146,11 +152,22 @@
      * @param {Number} time
      */
     SongPlayer.setCurrentTime = function(time) {
-      console.log("SongPlayer.setCurrentTime with time: " + time);
       if (currentBuzzObject) {
         currentBuzzObject.setTime(time);
       }
     };
+
+    /**
+     * @function setVolume
+     * @desc Set the buzz player's volume. See setCurrentTime for more info.
+     * @param {Number} volume
+     */
+    SongPlayer.setVolume = function(volume) {
+      SongPlayer.volume = volume
+      if (currentBuzzObject) {
+        currentBuzzObject.setVolume(volume)
+      }
+    }
 
     /**
      * @function setSong

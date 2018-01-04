@@ -30,7 +30,7 @@
         </a>
       </td>
       <td class="song-item-title">{{ song.title }}</td>
-      <td class="song-item-duration">{{ song.duration }}</td>
+      <td class="song-item-duration">{{ song.duration || 0 | secondsToDate | date:'mm:ss' }}</td>
     </tr>
   </table>
 </main>
