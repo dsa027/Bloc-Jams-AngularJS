@@ -103,3 +103,49 @@ body.album {
         margin: auto;
     }
 }
+
+.playlist-select {
+  border: 1px solid black;
+  background-color: white;
+  color: black;
+  position: fixed;
+  top: 35%;
+  left: 35%;
+  justify-content: center;
+  width: 30%;
+  padding: 20px;
+}
+
+.playlist-select h3 {
+  text-align: center;
+}
+
+/* #ps-delete, #ps-add {
+  float: right;
+} */
+
+#ps-input-add {
+  float: left;
+}
+
+#ps-exit {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 4px;
+}
+
+#ps-select-and-delete {
+  margin: 0 auto;
+  justify-content: center;
+}
+
+#ps-input-and-add {
+  margin: 0 auto;
+  justify-content: center;
+}
+
+.ion-android-delete {
+  padding: 7px;
+  font-size: 21px;
+}

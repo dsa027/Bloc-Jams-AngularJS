@@ -1,0 +1,49 @@
+<div class='playlist-select'>
+  <div class="modal fade">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div>
+          <span id="ps-exit" class="ion-close" ng-click="album.playlist.exit()"></span>
+        </div>
+        <div class="modal-header">
+          <h3>Playlist Selection for {{ album.playlist.song.title }}</h3>
+          <div id="ps-select-and-delete">
+            <select ng-model="album.playlist.selectedPlaylist">
+              <option
+                  ng-repeat="option in album.playlist.objectKeys(album.playlist.list)"
+                  value="{{option}}">
+                {{option}}
+              </option>
+            </select>
+            <button
+                type="button"
+                id="ps-select"
+                ng-click="album.playlist.selectPlaylist()">
+              Select
+            </button>
+            <button
+                type="button"
+                id="ps-delete"
+                ng-click="album.playlist.deletePlaylist()">
+              Delete
+            </button>
+          </div>
+          <br><hr><br>
+          <div id="ps-input-and-add">
+            <input
+                type=text
+                id="ps-input-add"
+                ng-model="album.playlist.newPlaylist">
+            <button
+                type="button"
+                id="ps-add"
+                ng-click="album.playlist.addPlaylist()">
+              Add
+            </button>
+          </div>
+        </div>
+        <div class="modal-body"><!-- ng-transclude--></div>
+      </div>
+    </div>
+  </div>
+</div>

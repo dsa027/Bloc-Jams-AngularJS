@@ -9,6 +9,7 @@
       <h5 class="album-view-release-info">{{ album.albumData.year }} {{ album.albumData.label }}</h5>
     </div>
   </section>
+  <playlist-select ng-show="album.playlist.showPlaylist"></playlist-select>
   <table class="album-view-song-list">
     <tr
         class="album-view-song-item"
@@ -21,7 +22,7 @@
         </span>
         <a class="album-song-button"
             ng-show="!song.playing && (hovered || album.songPlayer.currentSong === song)"
-            ng-click="album.songPlayer.play(song)">
+            ng-click="album.playlist.index = $index; album.songPlayer.play(song)">
           <span class="ion-play"></span>
         </a>
         <a class="album-song-button" ng-show="song.playing"
@@ -31,6 +32,17 @@
       </td>
       <td class="song-item-title">{{ song.title }}</td>
       <td class="song-item-duration">{{ song.duration || 0 | secondsToMMSS }}</td>
+      <!-- ng-click="album.showDialog($index, song.title)" -->
+      <td
+          class="song-item-playlist ion-android-checkbox-outline-blank"
+          ng-show="album.playlist.isPlaylisted(album.albumData, $index);!album.playlist.playlisted && album.albumData.label != 'N/A'"
+          ng-click="album.playlist.handlePlaylistClick($index, song, album.albumData)">
+      </td>
+      <td
+          class="song-item-playlist ion-android-checkbox-outline"
+          ng-show="album.playlist.isPlaylisted(album.albumData, $index);album.playlist.playlisted && album.albumData.label != 'N/A'"
+          ng-click="album.playlist.deleteFromPlaylist()">
+      </td>
     </tr>
   </table>
 </main>

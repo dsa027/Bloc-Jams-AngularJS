@@ -1,0 +1,18 @@
+.playlists-container {
+
+}
+
+.playlists-each-playlist {
+
+}
+
+.playlists-title {
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: ivory;
+}
+
+.playlists-song {
+  font-size: .75rem;
+  color: antiquewhite;
+}

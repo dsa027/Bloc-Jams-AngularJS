@@ -1,0 +1,24 @@
+<section class="playlists-container container clearfix">
+  <div
+      class="playlists-each-playlist column fourth"
+      ng-repeat="key in playlists.playlist.objectKeys(playlists.playlist.list)">
+    <p>
+      <a
+          class="playlists-title"
+          ui-sref="album"
+          ng-click="playlists.playlist.playThisPlaylist(key)">
+        {{ key }}
+      </a>
+    </p>
+    <p
+        class="playlists-song caption"
+        ng-repeat="song in playlists.playlist.list[key]">
+      {{ playlists.playlist.unPlaylistKey(song)[1] }} /
+      {{ playlists.playlist.unPlaylistKey(song)[0]}}
+      <span
+          class="ion-android-delete"
+          ng-click="playlists.playlist.deleteFromPlaylist(key, song)">
+      </span>
+    </p>
+  </div>
+ </section>

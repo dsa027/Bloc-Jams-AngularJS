@@ -21,8 +21,13 @@
         controller: 'AlbumCtrl as album',
         templateUrl: '/templates/album.html'
       })
+      .state('playlists', {
+        url: '/playlists',
+        controller: 'PlaylistsCtrl as playlists',
+        templateUrl: '/templates/playlists.html'
+      })
   }
   angular
-    .module('blocJams', ['ui.router'])
+    .module('blocJams', ['ui.router', 'firebase'])
     .config(config)
 })()

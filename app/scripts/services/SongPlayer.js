@@ -1,7 +1,7 @@
 (function() {
   function SongPlayer($rootScope, Fixtures) {
     /**
-     * @desc Just something to return from this service when invoked
+     * @desc The object into which we put properties and functions
      * @type {Object}
      */
     const SongPlayer = {}
@@ -10,7 +10,7 @@
      * @desc This holds the current Album
      * @type {Object}
      */
-    let currentAlbum = Fixtures.getAlbum()
+    SongPlayer.currentAlbum = Fixtures.getAlbum()
 
     /**
      * @desc The song that's playing/paused in BuzzObject
@@ -34,13 +34,25 @@
      * @desc Controls whether the sounds is muted or not
      * @type {Boolean}
      */
-    this.isMuted = true
+    this.isMuted = false
 
     /**
      * @desc Buzz object audio file
      * @type {Object}
      */
     let currentBuzzObject = null
+
+    /**
+     * @function init
+     * @desc Reinistializes SongPlayer properties
+     */
+    SongPlayer.init = function init() {
+      SongPlayer.currentAlbum = Fixtures.getAlbum()
+      SongPlayer.currentSong = null
+      SongPlayer.currentTime = null
+      SongPlayer.currentBuzzObject = null
+      this.isMuted = false
+    }
 
     /**
      * @function pauseSong
@@ -92,7 +104,7 @@
      * @param {Object} song
      */
     const getSongIndex = function(song) {
-      return currentAlbum.songs.indexOf(song)
+      return SongPlayer.currentAlbum.songs.indexOf(song)
     }
 
     /**
@@ -121,7 +133,7 @@
         stopSong()
       }
       else {
-        const song = currentAlbum.songs[currentSongIndex]
+        const song = SongPlayer.currentAlbum.songs[currentSongIndex]
         this.setSong(song)
         this.playSong(song)
       }
@@ -139,11 +151,11 @@
       let currentSongIndex = getSongIndex(SongPlayer.currentSong)
       currentSongIndex++
 
-      if (currentSongIndex >= currentAlbum.songs.length) {
+      if (currentSongIndex >= SongPlayer.currentAlbum.songs.length) {
         stopSong()
       }
       else {
-        const song = currentAlbum.songs[currentSongIndex]
+        const song = SongPlayer.currentAlbum.songs[currentSongIndex]
         this.setSong(song)
         this.playSong(song)
       }
@@ -201,6 +213,9 @@
         currentBuzzObject.stop()
         currentBuzzObject.unbind('timeupdate')
         currentBuzzObject.unbind('ended')
+        if (!SongPlayer.currentSong) {
+          SongPlayer.currentSong = {}
+        }
         SongPlayer.currentSong.playing = null
       }
 
@@ -220,10 +235,10 @@
       currentBuzzObject.bind('ended', function() {
         let idx = getSongIndex(SongPlayer.currentSong)
         idx++
-        if (idx >= currentAlbum.songs.length) {
+        if (idx >= SongPlayer.currentAlbum.songs.length) {
           idx = 0
         }
-        const song = currentAlbum.songs[idx]
+        const song = SongPlayer.currentAlbum.songs[idx]
         SongPlayer.setSong(song)
         SongPlayer.playSong(song)
       })

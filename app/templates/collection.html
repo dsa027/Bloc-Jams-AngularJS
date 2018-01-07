@@ -5,11 +5,20 @@
     <img src="{{ album.albumArtUrl }}"/>
     <div class="collection-album-info caption">
       <p>
-        <a class="album-name" ui-sref="album">{{ album.title }}</a>
+        <a
+            class="album-name"
+            ui-sref="album"
+            ng-click="collection.songPlayer.init();collection.collection.chosen(album)">
+          {{ album.title }}
+        </a>
         <br/>
-        <a ui-sref="album">{{ album.artist }}</a>
+        <a
+            ui-sref="album"
+            ng-click="collection.songPlayer.init();collection.collection.chosen(album)">
+          {{ album.artist }}
+        </a>
         <br/>
-        {{ album.songs.length }}
+        {{ album.songs.length }} Songs
         <br/>
       </p>
     </div>
