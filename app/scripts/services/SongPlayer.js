@@ -55,7 +55,7 @@
     }
 
     /**
-     * @function pauseSong
+     * @function play
      * @desc If the song is different than what's currently playing, set the
      * new song via setSong(song) and the play the song via playSong(song).
      * If the song is the same and is paused, play the song via playSong(song).
@@ -75,7 +75,7 @@
     }
 
     /**
-     * @function pauseSong
+     * @function pause
      * @desc Pauses the current song and sets song.playing to false so that the correct
      * html & css will show the play ionicon
      * @param {Object} song
@@ -209,6 +209,7 @@
      * @return the empty SongPlayer object
      */
     SongPlayer.setSong = function(song) {
+      console.log("SongPlayer.setSong(): ", song, "currentAlbum: ", SongPlayer.currentAlbum);
       if (currentBuzzObject) {
         currentBuzzObject.stop()
         currentBuzzObject.unbind('timeupdate')
@@ -218,6 +219,8 @@
         }
         SongPlayer.currentSong.playing = null
       }
+
+      SongPlayer.currentSong = song
 
       currentBuzzObject = new buzz.sound(song.audioUrl, {
         formats: ['mp3'],
@@ -242,8 +245,6 @@
         SongPlayer.setSong(song)
         SongPlayer.playSong(song)
       })
-
-      SongPlayer.currentSong = song
     }
 
     return SongPlayer

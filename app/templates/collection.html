@@ -8,13 +8,13 @@
         <a
             class="album-name"
             ui-sref="album"
-            ng-click="collection.songPlayer.init();collection.collection.chosen(album)">
+            ng-click="collection.fixtures.setAlbum(album);collection.songPlayer.init()">
           {{ album.title }}
         </a>
         <br/>
         <a
             ui-sref="album"
-            ng-click="collection.songPlayer.init();collection.collection.chosen(album)">
+            ng-click="collection.fixtures.setAlbum(album);collection.songPlayer.init()">
           {{ album.artist }}
         </a>
         <br/>

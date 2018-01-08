@@ -1,13 +1,14 @@
 (function() {
-     function CollectionCtrl(Fixtures, Collection, SongPlayer) {
-       this.collection = Collection
+     function CollectionCtrl(Fixtures, SongPlayer) {
        this.songPlayer = SongPlayer
-       this.albums = Fixtures.getCollection()
+       this.fixtures = Fixtures
+
+       this.albums = this.fixtures.getCollection()
      }
 
      angular
          .module('blocJams')
          .controller('CollectionCtrl', [
-           'Fixtures', 'Collection', 'SongPlayer', CollectionCtrl
+           'Fixtures', 'SongPlayer', CollectionCtrl
          ])
  })()

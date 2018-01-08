@@ -1,8 +1,7 @@
 (function() {
-  function Playlist(Collection, Fixtures, SongPlayer) {
+  function Playlist(Fixtures, SongPlayer) {
     let Playlist = {}
 
-    Playlist.collection = Collection
     Playlist.fixtures = Fixtures
     Playlist.songPlayer = SongPlayer
 
@@ -18,11 +17,18 @@
 
     Playlist.list = {
       'Playlist #1': [
-        'The Colors - 10:Blue',
-        'The Telephone - 11:Wrong phone number'
+        'Jianbing:Smooth',
+        'Jianbing:Mack The Knife',
+        'Booth:Uptown Funk!',
+        'Lumbersexual:Bette Davis Eyes',
+        'Lumbersexual:Endless Love',
+        'Etsy:I Gotta Feeling'
+
       ],
       'Playlist #2': [
-        'The Colors - 10:Green'
+        'Mlkshk:Yeah!',
+        'Mlkshk:Un-Break My Heart',
+        'Etsy:Party Rock Anthem'
       ],
       'Playlist #3': [],
     }
@@ -47,14 +53,11 @@
         albumArtUrl: '/assets/images/album_covers/userpic.jpg',
         songs: getSongs(key) // get songs from albums in playlist
       }
-      // TODO: Unsure why we have to do both init() and currentAlbum=newAlbum
-      // Initialize song player so that it's not looking at last album played
-      Playlist.songPlayer.init()
+      // set this playlist "album" as the setAlbum album so it will
+      // show on the album page.
+      Playlist.fixtures.setAlbum(newAlbum)
       // set the SongPlayer album to this made up album
       Playlist.songPlayer.currentAlbum = newAlbum
-      // set this playlist "album" as the chosen album so it will
-      // show on the album page
-      Playlist.collection.chosen(newAlbum)
     }
 
     // get playlist songs from the albums they appear in. return the list of songs
@@ -211,5 +214,5 @@
 
 angular
    .module('blocJams')
-   .factory('Playlist', ['Collection', 'Fixtures', 'SongPlayer', Playlist])
+   .factory('Playlist', ['Fixtures', 'SongPlayer', Playlist])
 })();
