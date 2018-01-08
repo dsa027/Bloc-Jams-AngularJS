@@ -1,0 +1,11 @@
+<div class="search-results" ng-controller="SearchCtrl as search">
+  <div ng-repeat='result in search.search.results'>
+    <span>
+      <a
+          ng-click="search.search.clearAll();search.search.goTo(result)">
+        {{ result.title }}
+      </a>
+    </span>
+    <br>
+  </div>
+</div>

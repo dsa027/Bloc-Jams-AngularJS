@@ -1,14 +1,15 @@
 (function() {
-  function Playlist(Fixtures, SongPlayer) {
+  function Playlist(Fixtures, SongPlayer, Album) {
     let Playlist = {}
 
     Playlist.fixtures = Fixtures
-    Playlist.songPlayer = SongPlayer
+    Playlist.psSongPlayer = SongPlayer
+    Playlist.album = Album
 
     Playlist.showPlaylist = false
-    Playlist.index = -1
-    Playlist.song = ""
-    Playlist.album = ""
+    Playlist.psIndex = -1
+    Playlist.psSong = ""
+    Playlist.psAlbum = ""
     Playlist.selectedPlaylist = ""
     Playlist.newPlaylist = ""
     Playlist.playlisted = false
@@ -35,9 +36,9 @@
 
     // initialize for next playlist to play
     const initList = function initList() {
-      Playlist.index = -1
-      Playlist.song = ""
-      Playlist.album = ""
+      Playlist.psIndex = -1
+      Playlist.psSong = ""
+      Playlist.psAlbum = ""
       Playlist.selectedPlaylist = ""
     }
 
@@ -55,9 +56,9 @@
       }
       // set this playlist "album" as the setAlbum album so it will
       // show on the album page.
-      Playlist.fixtures.setAlbum(newAlbum)
+      Playlist.album.setAlbum(newAlbum)
       // set the SongPlayer album to this made up album
-      Playlist.songPlayer.currentAlbum = newAlbum
+      Playlist.psSongPlayer.currentAlbum = newAlbum
     }
 
     // get playlist songs from the albums they appear in. return the list of songs
@@ -126,9 +127,9 @@
       Playlist.showPlaylist = !Playlist.showPlaylist
       if (Playlist.showPlaylist) {
         setSelectedPlaylist()
-        Playlist.index = index
-        Playlist.song = song
-        Playlist.album = album
+        Playlist.psIndex = index
+        Playlist.psSong = song
+        Playlist.psAlbum = album
       }
     }
 
@@ -154,7 +155,7 @@
       if (Playlist.selectedPlaylist) {
         Playlist.showPlaylist = false // will close the dialog
         Playlist.list[Playlist.selectedPlaylist].push(  // add song to playlist
-          playlistKey(Playlist.album.title, Playlist.song.title)
+          playlistKey(Playlist.psAlbum.title, Playlist.psSong.title)
         )
       }
     }
@@ -184,18 +185,18 @@
       // properties that are already set if coming from album
       if (playlist != null && albumSong != null) {
         const albumSongSplit = Playlist.unPlaylistKey(albumSong)
-        Playlist.album = {}
-        Playlist.song = {}
+        Playlist.psAlbum = {}
+        Playlist.psSong = {}
         Playlist.selectedPlaylist = playlist
-        Playlist.album.title = albumSongSplit[0]
-        Playlist.song.title = albumSongSplit[1]
+        Playlist.psAlbum.title = albumSongSplit[0]
+        Playlist.psSong.title = albumSongSplit[1]
       }
 
       // run thru all playlists and delete this song
       let keys = Object.keys(Playlist.list)
       keys.forEach(key => {
         let i = Playlist.list[key].indexOf(
-          playlistKey(Playlist.album.title, Playlist.song.title)
+          playlistKey(Playlist.psAlbum.title, Playlist.psSong.title)
         )
         if (i != -1) {
           Playlist.list[Playlist.selectedPlaylist].splice(i, 1)
@@ -214,5 +215,5 @@
 
 angular
    .module('blocJams')
-   .factory('Playlist', ['Fixtures', 'SongPlayer', Playlist])
+   .factory('Playlist', ['Fixtures', 'SongPlayer', 'Album', Playlist])
 })();

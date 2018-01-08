@@ -25,22 +25,6 @@
 
     Fixtures.collection = []
 
-    Fixtures.album = ""
-
-    // TODO: this belongs in an album service
-    Fixtures.setAlbum = function setAlbum(album) {
-      // Fixtures.songPlayer.init()
-      Fixtures.album = album
-      console.log("Fixtures.album: ", album);
-    }
-
-    // TODO: this belongs in an album service
-    Fixtures.getAlbum = function getAlbum() {
-      if (!Fixtures.album) return
-
-      return Fixtures.album
-    }
-
     // put initial cap on a string
     const initCap = function initCap(str) {
       return str[0].toUpperCase() + str.substring(1)
@@ -56,6 +40,27 @@
     const getSongTitle = function getSongTitle() {
       songTitleIdx = ++songTitleIdx % songTitles.length
       return songTitles[songTitleIdx]
+    }
+
+    // TODO: use actual database?
+    // Mimic db search
+    Fixtures.search = function search(term) {
+      if (!Fixtures.collection || Fixtures.collection.length === 0) {
+        Fixtures.getCollection()
+      }
+      const search = []
+      term = term.toLowerCase()
+      Fixtures.collection.forEach(album => {
+        if (album.title.toLowerCase().includes(term) ||
+            album.artist.toLowerCase().includes(term) ||
+            album.songs.find(song => {
+          return song.title.toLowerCase().includes(term)
+          })
+        )
+          search.push(album)
+      })
+
+      return search
     }
 
     // make our very own collection out of albumPicasso,

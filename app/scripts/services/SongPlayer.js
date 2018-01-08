@@ -1,5 +1,5 @@
 (function() {
-  function SongPlayer($rootScope, Fixtures) {
+  function SongPlayer($rootScope, Album) {
     /**
      * @desc The object into which we put properties and functions
      * @type {Object}
@@ -10,7 +10,7 @@
      * @desc This holds the current Album
      * @type {Object}
      */
-    SongPlayer.currentAlbum = Fixtures.getAlbum()
+    SongPlayer.currentAlbum = Album.getAlbum()
 
     /**
      * @desc The song that's playing/paused in BuzzObject
@@ -47,7 +47,7 @@
      * @desc Reinistializes SongPlayer properties
      */
     SongPlayer.init = function init() {
-      SongPlayer.currentAlbum = Fixtures.getAlbum()
+      SongPlayer.currentAlbum = Album.getAlbum()
       SongPlayer.currentSong = null
       SongPlayer.currentTime = null
       SongPlayer.currentBuzzObject = null
@@ -209,7 +209,6 @@
      * @return the empty SongPlayer object
      */
     SongPlayer.setSong = function(song) {
-      console.log("SongPlayer.setSong(): ", song, "currentAlbum: ", SongPlayer.currentAlbum);
       if (currentBuzzObject) {
         currentBuzzObject.stop()
         currentBuzzObject.unbind('timeupdate')
@@ -252,5 +251,5 @@
 
   angular
      .module('blocJams')
-     .factory('SongPlayer', ['$rootScope', 'Fixtures', SongPlayer])
+     .factory('SongPlayer', ['$rootScope', 'Album', SongPlayer])
  })();

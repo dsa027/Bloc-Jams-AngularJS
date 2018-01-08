@@ -21,6 +21,13 @@
               <a ui-sref="landing" class="navbar-link">Home</a>
               <a ui-sref="collection" class="navbar-link">Collection</a>
               <a ui-sref="playlists" class="navbar-link">Playlists</a>
+              <input
+                  ng-controller="SearchCtrl as search"
+                  type="text"
+                  placeholder="Search song/album/artist..."
+                  ng-change="search.search.handleSearch()"
+                  ng-model="search.search.searchTerm">
+              <search-results ng-show="search.search.results.length > 0"></search-results>
             </div>
         </nav>
 
@@ -43,9 +50,13 @@
         <script src="/scripts/controllers/AlbumCtrl.js"></script>
         <script src="/scripts/controllers/PlayerBarCtrl.js"></script>
         <script src="/scripts/controllers/PlaylistsCtrl.js"></script>
-        <script src="/scripts/directives/playlistSelect.js"></script>
+        <script src="/scripts/controllers/SearchCtrl.js"></script>
         <script src="/scripts/services/Playlist.js"></script>
+        <script src="/scripts/services/Album.js"></script>
+        <script src="/scripts/services/Search.js"></script>
+        <script src="/scripts/directives/playlistSelect.js"></script>
         <script src="/scripts/directives/seekBar.js"></script>
+        <script src="/scripts/directives/searchResults.js"></script>
         <script src="/scripts/filters/secondsToMMSS.js"></script>
     </body>
 </html>
