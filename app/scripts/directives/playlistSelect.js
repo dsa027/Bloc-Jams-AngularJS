@@ -15,5 +15,4 @@
   angular
     .module('blocJams')
     .directive('playlistSelect', ['Playlist', playlistSelect])
-
 })()

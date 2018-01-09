@@ -1,5 +1,5 @@
 (function() {
-  function Playlist(Fixtures, SongPlayer, Album) {
+  function Playlist($rootScope, Fixtures, SongPlayer, Album) {
     let Playlist = {}
 
     Playlist.fixtures = Fixtures
@@ -13,6 +13,11 @@
     Playlist.selectedPlaylist = ""
     Playlist.newPlaylist = ""
     Playlist.playlisted = false
+
+    Playlist.showYesNoDialog = false
+    Playlist.areYouSureDelete = "Are you sure you want to delete"
+    Playlist.yes = "Yes"
+    Playlist.no = "No, don't delete"
 
     Playlist.objectKeys = Object.keys
 
@@ -99,6 +104,10 @@
       return songs
     }
 
+    Playlist.setShowYesNoDialog = function setShowYesNoDialog(bool) {
+      Playlist.showYesNoDialog = bool
+    }
+
     // TODO: extremely inefficient considering it gets called dozens of times
     // as the mouse moves over each song.
     // Checks to see if a song is playlisted (appears in any playlist)
@@ -173,8 +182,10 @@
     }
 
     // delete an entire playlist
-    Playlist.deletePlaylist = function deletePlaylist() {
-      // TODO
+    Playlist.deletePlaylist = function deletePlaylist(from) {
+      if (from) {
+        Playlist.selectedPlaylist = from
+      }
       delete Playlist.list[Playlist.selectedPlaylist]
       setSelectedPlaylist()
     }
@@ -215,5 +226,5 @@
 
 angular
    .module('blocJams')
-   .factory('Playlist', ['Fixtures', 'SongPlayer', 'Album', Playlist])
+   .factory('Playlist', ['$rootScope', 'Fixtures', 'SongPlayer', 'Album', Playlist])
 })();

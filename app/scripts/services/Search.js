@@ -13,6 +13,9 @@
       if (Search.searchTerm) {
         Search.results = Fixtures.search(Search.searchTerm)
       }
+      else {
+        Search.results = ""
+      }
     }
 
     Search.clearAll = function clearAll() {

@@ -1,0 +1,28 @@
+<div class='playlist-select'>
+  <div class="modal fade">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div>
+          <span id="ps-exit" class="ion-close" ng-click="leave()"></span>
+        </div>
+        <div class="modal-header">
+          <h3>{{ title }} {{ key }}</h3>
+          <div id="ps-select-and-delete">
+            <button
+                type="button"
+                id="ynd-select"
+                ng-click="handleYesButton();leave()">
+              {{ buttonYes }}
+            </button>
+            <button
+                type="button"
+                id="ynd-delete"
+                ng-click="handleNoButton();leave()">
+              {{ buttonNo }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

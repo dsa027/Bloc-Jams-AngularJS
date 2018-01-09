@@ -9,6 +9,10 @@
           ng-click="playlists.playlist.playThisPlaylist(key)">
         {{ key }}
       </a>
+      <span
+          class="ion-android-delete"
+          ng-click="playlists.playlist.showYesNoDialog=true">
+      </span>
     </p>
     <p
         class="playlists-song caption"
@@ -20,5 +24,15 @@
           ng-click="playlists.playlist.deleteFromPlaylist(key, song)">
       </span>
     </p>
+    <yes-no-dialog
+        ng-show='playlists.playlist.showYesNoDialog'
+        key='{{key}}'
+        title='{{playlists.playlist.areYouSureDelete}}'
+        button-yes='{{playlists.playlist.yes}}'
+        button-no='{{playlists.playlist.no}}'
+        handle-yes='playlists.playlist.deletePlaylist(key)'
+        handle-no='playlists.playlist.showYesNoDialog=false'
+        leave='playlists.playlist.setShowYesNoDialog(false)'>
+    </yes-no-dialog>
   </div>
  </section>

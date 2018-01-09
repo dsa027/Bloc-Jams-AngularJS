@@ -34,7 +34,8 @@
      * @desc Controls whether the sounds is muted or not
      * @type {Boolean}
      */
-    this.isMuted = false
+    SongPlayer.isMuted = false
+    SongPlayer.muteStyle = ""
 
     /**
      * @desc Buzz object audio file
@@ -51,7 +52,7 @@
       SongPlayer.currentSong = null
       SongPlayer.currentTime = null
       SongPlayer.currentBuzzObject = null
-      this.isMuted = false
+      SongPlayer.isMuted = false
     }
 
     /**
@@ -194,12 +195,12 @@
     SongPlayer.muteSound = function() {
       if (!currentBuzzObject) return
 
-      this.isMuted = !this.isMuted
+      SongPlayer.isMuted = !SongPlayer.isMuted
 
-      if (this.isMuted) currentBuzzObject.mute()
+      if (SongPlayer.isMuted) currentBuzzObject.mute()
       else currentBuzzObject.unmute()
 
-      this.muteStyle = this.isMuted ? {'color' : 'red'} : {'color' : 'white'}
+      SongPlayer.muteStyle = SongPlayer.isMuted ? {'color' : 'red'} : {'color' : 'white'}
     }
 
     /**
