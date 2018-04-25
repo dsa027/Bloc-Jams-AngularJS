@@ -8,8 +8,7 @@
   },
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "postinstall": "ng build -prod"
+    "start": "node server.js"
   },
   "author": "Bloc Inc",
   "license": "ISC",
