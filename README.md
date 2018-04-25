@@ -1,4 +1,4 @@
-# Bloc Jams AngularJS Starter
+## Bloc Jams AngularJS Starter
 
 This repository serves as a starter project for Bloc's AngularJS-driven music player app. 
 
