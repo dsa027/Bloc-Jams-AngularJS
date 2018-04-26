@@ -1,5 +1,5 @@
 (function() {
-  function AlbumCtrl(Fixtures, SongPlayer, Playlist, Album, Search) {
+  function AlbumCtrl(SongPlayer, Playlist, Album, Search) {
     this.songPlayer = SongPlayer
     this.playlist = Playlist
     this.album = Album
@@ -11,6 +11,6 @@
   angular
     .module('blocJams')
     .controller('AlbumCtrl', [
-      'Fixtures', 'SongPlayer', 'Playlist', 'Album', 'Search', AlbumCtrl
+      'SongPlayer', 'Playlist', 'Album', 'Search', AlbumCtrl
     ])
  })()
