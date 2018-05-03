@@ -2,9 +2,9 @@
 title: BlocJams-Angular
 short-description: A Web-based, single page application song player written in AngularJS
 ---
-![Logo](https://bloc-jams-angular-dsa027.herokuapp.com/assets/images/bloc_jams_logo.png)
-
-[GitHub](https://github.com/dsa027/Bloc-Jams-AngularJS)
+<a href="https://bloc-jams-angular-dsa027.herokuapp.com">
+  Heroku
+</a>
 
 # Summary
 

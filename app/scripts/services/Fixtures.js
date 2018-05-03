@@ -53,9 +53,10 @@
       Fixtures.collection.forEach(album => {
         if (album.title.toLowerCase().includes(term) ||
             album.artist.toLowerCase().includes(term) ||
-            album.songs.find(song => {
-          return song.title.toLowerCase().includes(term)
-          })
+            album.songs.filter(song => {
+              return song.title.toLowerCase().includes(term)
+            }
+          )
         )
           search.push(album)
       })
